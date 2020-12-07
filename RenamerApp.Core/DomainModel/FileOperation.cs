@@ -1,8 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Microsoft.WindowsAPICodePack.Dialogs;
+using System.Diagnostics;
+using System.IO;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using Microsoft.Win32;
+using Microsoft.WindowsAPICodePack.Dialogs;
+using RenamerApp.WPFClasses;
 
 namespace RenamerApp.Core.DomainModel
 {
@@ -77,9 +81,7 @@ namespace RenamerApp.Core.DomainModel
                     $"{(outputDirectory == "" ? fileInputs.Dire : outputDirectory)}\\{fileInputs.Name}{fileInputs.Exte}",
                     overwrite));
             else
-                await Task.Run(() => File.Move($"{fileInputs.FullFile}",
-                    $"{(outputDirectory == "" ? fileInputs.Dire : outputDirectory)}\\{fileInputs.Name}{fileInputs.Exte}",
-                    overwrite));
+                await Task.Run(() => File.Move($"{fileInputs.FullFile}", $"{(outputDirectory == "" ? fileInputs.Dire : outputDirectory)}\\{fileInputs.Name}{fileInputs.Exte}"));
             return true;
         }
 
