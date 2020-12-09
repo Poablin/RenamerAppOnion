@@ -9,6 +9,6 @@ namespace RenamerApp.Core.DomainServices
 {
     interface IFileModelRepository
     {
-        Task<bool> Create(FileModel editormodel);
+        Task<bool> Create(FileModel filemodel);
     }
 }
