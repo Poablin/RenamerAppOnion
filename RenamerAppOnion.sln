@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RenamerApp.Core", "RenamerA
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RenamerApp.Infrastructure", "RenamerApp.Infrastructure\RenamerApp.Infrastructure.csproj", "{6EE49167-FA77-4976-BBDE-7D2969A64CC6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RenamerApp.UnitTest", "RenamerApp.UnitTest\RenamerApp.UnitTest.csproj", "{A38EFF46-8AB6-4EB7-8583-AD1775DA0627}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{6EE49167-FA77-4976-BBDE-7D2969A64CC6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6EE49167-FA77-4976-BBDE-7D2969A64CC6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6EE49167-FA77-4976-BBDE-7D2969A64CC6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A38EFF46-8AB6-4EB7-8583-AD1775DA0627}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A38EFF46-8AB6-4EB7-8583-AD1775DA0627}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A38EFF46-8AB6-4EB7-8583-AD1775DA0627}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A38EFF46-8AB6-4EB7-8583-AD1775DA0627}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
