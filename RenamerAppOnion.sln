@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30717.126
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RenamerApp.Core", "RenamerApp.Core\RenamerApp.Core.csproj", "{D4F26D41-FE39-449A-898B-2101C43917D9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RenamerApp.Core", "RenamerApp.Core\RenamerApp.Core.csproj", "{D4F26D41-FE39-449A-898B-2101C43917D9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RenamerApp.Infrastructure", "RenamerApp.Infrastructure\RenamerApp.Infrastructure.csproj", "{6EE49167-FA77-4976-BBDE-7D2969A64CC6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RenamerApp.UnitTest", "RenamerApp.UnitTest\RenamerApp.UnitTest.csproj", "{A38EFF46-8AB6-4EB7-8583-AD1775DA0627}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RenamerApp.UnitTest", "RenamerApp.UnitTest\RenamerApp.UnitTest.csproj", "{A38EFF46-8AB6-4EB7-8583-AD1775DA0627}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RenamerApp.UserInterface", "RenamerApp.UserInterface\RenamerApp.UserInterface.csproj", "{73EDB787-A8C5-4B26-B099-1B32F64C1C4D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,14 +19,14 @@ Global
 		{D4F26D41-FE39-449A-898B-2101C43917D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D4F26D41-FE39-449A-898B-2101C43917D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D4F26D41-FE39-449A-898B-2101C43917D9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6EE49167-FA77-4976-BBDE-7D2969A64CC6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6EE49167-FA77-4976-BBDE-7D2969A64CC6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6EE49167-FA77-4976-BBDE-7D2969A64CC6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6EE49167-FA77-4976-BBDE-7D2969A64CC6}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A38EFF46-8AB6-4EB7-8583-AD1775DA0627}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A38EFF46-8AB6-4EB7-8583-AD1775DA0627}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A38EFF46-8AB6-4EB7-8583-AD1775DA0627}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A38EFF46-8AB6-4EB7-8583-AD1775DA0627}.Release|Any CPU.Build.0 = Release|Any CPU
+		{73EDB787-A8C5-4B26-B099-1B32F64C1C4D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{73EDB787-A8C5-4B26-B099-1B32F64C1C4D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{73EDB787-A8C5-4B26-B099-1B32F64C1C4D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{73EDB787-A8C5-4B26-B099-1B32F64C1C4D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

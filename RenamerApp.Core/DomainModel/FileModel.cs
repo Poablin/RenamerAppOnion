@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace RenamerApp.Core.DomainModel
 {
@@ -14,12 +15,12 @@ namespace RenamerApp.Core.DomainModel
             OldName = Path.GetFileNameWithoutExtension(file);
         }
 
-        public string FullFile { get; }
-        public string Directory { get; }
-        public string Name { get; internal set; }
-        public string Extension { get; }
-        private string OldName { get; }
-        public bool? Copy { get; set; }
+        private string FullFile { get; }
+        internal string Directory { get; }
+        internal string Name { get; set; }
+        internal string Extension { get; }
+        internal string OldName { get; }
+        internal bool? Copy { get; set; }
 
         public string OutputDirectory { get; internal set; }
         public string LogStartProcessing => $"Processing: \"{OldName}{Extension}\"";
@@ -35,6 +36,19 @@ namespace RenamerApp.Core.DomainModel
                 if (str == string.Empty) str += "Didn't do anything with file";
                 return str.Trim();
             }
+        }
+
+        internal async Task<bool> CopyOrMoveFilesAsync(string outputDirectory, bool? copy, bool overwrite)
+        {
+            if (copy == true)
+                await Task.Run(() => File.Copy($"{FullFile}",
+                    $"{(outputDirectory == "" ? Directory : outputDirectory)}\\{Name}{Extension}",
+                    overwrite));
+            else
+                await Task.Run(() => File.Move($"{FullFile}",
+                    $"{(outputDirectory == "" ? Directory : outputDirectory)}\\{Name}{Extension}",
+                    overwrite));
+            return true;
         }
     }
 }

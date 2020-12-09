@@ -1,40 +1,35 @@
-﻿using RenamerApp.Core.DomainServices;
-using System;
+﻿using System;
 using System.Threading.Tasks;
 using RenamerApp.Core.DomainModel;
 using System.IO;
 
 namespace RenamerApp.Core.ApplicationServices
 {
-    class FIleService
+    public class FileService
     {
-        private IFileModelRepository _repository;
-        private FileModel _fileModel;
-        private string OutputDirectory;
-        public FIleService(IFileModelRepository repository)
+        public FileService(string file)
         {
-            _repository = repository;
-        }
-        public async Task<FileModel> MakeNewFileName()
-        {
-            string filePath = string.Empty;
-            var fileModel = new FileModel(filePath);
-            await _repository.Create(fileModel);
-            _fileModel = fileModel;
-            return fileModel;
+            _fileModel = new FileModel(file);
         }
 
-        public bool CheckIfFileExistsInOutput()
+        private FileModel _fileModel { get; }
+
+        public async void Start(string OutputDirectory, bool? copy, bool overwrite)
+        {
+            await _fileModel.CopyOrMoveFilesAsync(OutputDirectory, copy, overwrite);
+        }
+
+        public bool CheckIfFileExistsInOutput(string OutputDirectory)
         {
             return File.Exists($"{OutputDirectory}\\{_fileModel.Name}{_fileModel.Extension}");
         }
 
-        public bool CheckIfOutputDirectoryExists()
+        public bool CheckIfOutputDirectoryExists(string OutputDirectory)
         {
             return Directory.Exists(OutputDirectory);
         }
 
-        public string CheckIfDirectoryExistsOrSetDefault()
+        public string CheckIfDirectoryExistsOrSetDefault(string OutputDirectory)
         {
             OutputDirectory = OutputDirectory == "" ? _fileModel.Directory :
                 Directory.Exists(OutputDirectory) ? OutputDirectory : "N/A";
