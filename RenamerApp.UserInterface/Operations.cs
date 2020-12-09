@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using Microsoft.Win32;
@@ -54,7 +53,7 @@ namespace RenamerApp
                 foreach (var file in FilePaths)
                 {
                     var fileInfo = new FileService(file);
-                    var errorChecking = new ErrorChecking(fileInfo, WindowInputs, Logger);
+                    var errorChecking = new ErrorChecking(fileInfo, WindowInputs, Path.GetDirectoryName(file), Logger);
                     //Under kan endres hva som skjer med navnet
                     if (WindowInputs.SpecificStringThis != "")
                         fileInfo.ReplaceSpecificString(WindowInputs.SpecificStringThis,
@@ -66,11 +65,13 @@ namespace RenamerApp
                     Logger.Log("Processing file");
                     //Forskjellig error checking
                     if (errorChecking.DirectoryExistsOrNot() == false) break;
-                    if (errorChecking.FileExistsAndCopyEnabledAndDirectoryDefault(Path.GetDirectoryName(file)) == false) continue;
+                    if (errorChecking.FileExistsAndCopyEnabledAndDirectoryDefault() ==
+                        false) continue;
                     if (errorChecking.FileExistsAndOverwriteNotChecked() == false) continue;
                     errorChecking.FileExistsAndOverwriteChecked();
                     //Output ting her nede
-                    fileInfo.Start(WindowInputs.OutputDirectory, WindowInputs.CopyCheckBox, (bool) WindowInputs.OverwriteCheckBox);
+                    fileInfo.Start(WindowInputs.OutputDirectory, WindowInputs.CopyCheckBox,
+                        (bool) WindowInputs.OverwriteCheckBox);
                     WindowInputs.IncrementProgressBar();
                     Logger.Log("Finished processing");
                 }
@@ -90,7 +91,6 @@ namespace RenamerApp
                 _window.InformationList.ScrollIntoView(_window.InformationList.Items[^1]);
             }
         }
-
 
 
         private void SelectFiles(object sender, RoutedEventArgs e)

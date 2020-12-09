@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Threading.Tasks;
-using RenamerApp.Core.DomainModel;
 using System.IO;
+using RenamerApp.Core.DomainModel;
 
 namespace RenamerApp.Core.ApplicationServices
 {
