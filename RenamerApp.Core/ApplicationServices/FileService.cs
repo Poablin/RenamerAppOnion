@@ -47,15 +47,15 @@ namespace RenamerApp.Core.ApplicationServices
                 : _fileModel.Name.Substring(0, 1).ToLower() + _fileModel.Name[1..];
         }
 
-        public void ReplaceSpecificString(string firststring, string secondstring)
+        public string ReplaceSpecificString(string firststring, string secondstring)
         {
-            _fileModel.Name = _fileModel.Name.Replace(firststring, secondstring);
+           return _fileModel.Name = _fileModel.Name.Replace(firststring, secondstring);
         }
 
-        public void SubstringThis(string fromIndex, string toIndex)
+        public string SubstringThis(string fromIndex, string toIndex)
         {
-            if (toIndex == "") _fileModel.Name = _fileModel.Name.Substring(Convert.ToInt32(fromIndex));
-            else _fileModel.Name = _fileModel.Name.Substring(Convert.ToInt32(fromIndex), Convert.ToInt32(toIndex));
+            if (toIndex == "") return _fileModel.Name = _fileModel.Name.Substring(Convert.ToInt32(fromIndex));
+            else return _fileModel.Name = _fileModel.Name.Substring(Convert.ToInt32(fromIndex), Convert.ToInt32(toIndex));
         }
     }
 }
