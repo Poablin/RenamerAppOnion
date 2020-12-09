@@ -8,10 +8,8 @@
         public string Extension { get; set; }
         public string OldName { get; set; }
         private bool? Copy { get; set; }
-
-        private string OutputDirectory { get; set; }
+        public string OutputDirectory { get; set; }
         public string LogStartProcessing => $"Processing: \"{OldName}{Extension}\"";
-
         public string LogFinishedProcessing
         {
             get

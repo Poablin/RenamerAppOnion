@@ -39,7 +39,6 @@ namespace RenamerApp.UserInterface
         {
             try
             {
-                var inMemoryRepository = new InMemoryRepository();
                 WindowInputs = new WindowInputs(_window);
                 WindowInputs.SetStartButtonContent("Stop !!!");
                 WindowInputs.SetProgressBarPercentage(false);
@@ -57,10 +56,12 @@ namespace RenamerApp.UserInterface
                 WindowInputs.SetProgressBarMaxmimum(FilePaths.Length);
                 foreach (var file in FilePaths)
                 {
+                    var inMemoryRepository = new InMemoryRepository();
                     var fileService = new FileService(file, inMemoryRepository);
                     await fileService.StartFile();
-                    var errorChecking =
-                        new ErrorChecking(fileService, WindowInputs, Path.GetDirectoryName(file), Logger);
+                    var fileModel = await inMemoryRepository.Read();
+                    fileModel.OutputDirectory = WindowInputs.OutputDirectory;
+                    var errorChecking = new ErrorChecking(fileService, WindowInputs, Path.GetDirectoryName(file), Logger);
                     //Under kan endres hva som skjer med navnet
                     if (WindowInputs.SpecificStringThis != "")
                         await fileService.ReplaceSpecificString(WindowInputs.SpecificStringThis,
@@ -69,18 +70,17 @@ namespace RenamerApp.UserInterface
                         await fileService.SubstringThis(WindowInputs.FromIndex, WindowInputs.ToIndex);
                     if (WindowInputs.TrimCheckBox == true) await fileService.Trim();
                     await fileService.UpperCase(WindowInputs.UppercaseCheckBox);
-                    Logger.Log("Processing file");
+                    Logger.Log(fileModel.LogStartProcessing);
                     //Forskjellig error checking
                     if (await errorChecking.DirectoryExistsOrNotAsync() == false) break;
                     if (await errorChecking.FileExistsAndCopyEnabledAndDirectoryDefaultAsync() == false) continue;
                     if (await errorChecking.FileExistsAndOverwriteNotCheckedAsync() == false) continue;
                     await errorChecking.FileExistsAndOverwriteCheckedAsync();
                     //Output ting her nede
-                    var fileModel = await inMemoryRepository.Read();
                     await CopyOrMoveFilesAsync(WindowInputs.OutputDirectory, WindowInputs.CopyCheckBox,
                         (bool) WindowInputs.OverwriteCheckBox, fileModel);
                     WindowInputs.IncrementProgressBar();
-                    Logger.Log("Finished processing");
+                    Logger.Log(fileModel.LogFinishedProcessing);
                 }
 
                 Logger.Log("Operation finished");
