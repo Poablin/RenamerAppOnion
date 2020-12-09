@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RenamerApp.UnitTest", "Rena
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RenamerApp.UserInterface", "RenamerApp.UserInterface\RenamerApp.UserInterface.csproj", "{73EDB787-A8C5-4B26-B099-1B32F64C1C4D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RenamerApp.Infrastructure", "RenamerApp.Infrastructure\RenamerApp.Infrastructure.csproj", "{22B0EC92-ADB0-426E-8F2F-A0F06CE68943}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{73EDB787-A8C5-4B26-B099-1B32F64C1C4D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{73EDB787-A8C5-4B26-B099-1B32F64C1C4D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{73EDB787-A8C5-4B26-B099-1B32F64C1C4D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{22B0EC92-ADB0-426E-8F2F-A0F06CE68943}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{22B0EC92-ADB0-426E-8F2F-A0F06CE68943}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{22B0EC92-ADB0-426E-8F2F-A0F06CE68943}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{22B0EC92-ADB0-426E-8F2F-A0F06CE68943}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

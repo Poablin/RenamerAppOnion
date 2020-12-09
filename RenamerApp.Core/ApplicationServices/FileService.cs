@@ -2,61 +2,76 @@
 using System.IO;
 using System.Threading.Tasks;
 using RenamerApp.Core.DomainModel;
+using RenamerApp.Core.DomainServices;
 
 namespace RenamerApp.Core.ApplicationServices
 {
     public class FileService
     {
-        public FileService(string file)
+        public FileService(string file, IFileRepository repository)
         {
-            _fileModel = new FileModel(file);
+            _file = file;
+            _repository = repository;
         }
 
-        private FileModel _fileModel { get; }
+        private string _file { get; }
+        private IFileRepository _repository { get; }
 
-        public async Task<bool> Start(string OutputDirectory, bool? copy, bool overwrite)
+        private async Task<FileModel> StartFile()
         {
-           return await _fileModel.CopyOrMoveFilesAsync(OutputDirectory, copy, overwrite);
+            var fileModel = new FileModel();
+            fileModel.FullFile = _file;
+            fileModel.Directory = Path.GetDirectoryName(_file);
+            fileModel.Name = Path.GetFileNameWithoutExtension(_file);
+            fileModel.Extension = Path.GetExtension(_file);
+            fileModel.OldName = Path.GetFileNameWithoutExtension(_file);
+            await _repository.Create(fileModel);
+            return fileModel;
+        }
+        public async Task<bool> CheckIfFileExistsInOutput(string OutputDirectory)
+        {
+            var fileModel = await _repository.Read();
+            return File.Exists($"{OutputDirectory}\\{fileModel.Name}{fileModel.Extension}"); ;
         }
 
-        public bool CheckIfFileExistsInOutput(string OutputDirectory)
+        public void CheckIfOutputDirectoryExists(string OutputDirectory)
         {
-            return File.Exists($"{OutputDirectory}\\{_fileModel.Name}{_fileModel.Extension}");
+            Directory.Exists(OutputDirectory);
         }
 
-        public bool CheckIfOutputDirectoryExists(string OutputDirectory)
+        public async Task<string> CheckIfDirectoryExistsOrSetDefault(string OutputDirectory)
         {
-            return Directory.Exists(OutputDirectory);
+            var fileModel = await _repository.Read();
+            var directory = OutputDirectory == "" ? fileModel.Directory :
+                 Directory.Exists(OutputDirectory) ? OutputDirectory : "N/A";
+            return directory;
         }
 
-        public string CheckIfDirectoryExistsOrSetDefault(string OutputDirectory)
+        public async Task<string> Trim()
         {
-            OutputDirectory = OutputDirectory == "" ? _fileModel.Directory :
-                Directory.Exists(OutputDirectory) ? OutputDirectory : "N/A";
-            return OutputDirectory;
+            var fileModel = await _repository.Read();
+            return fileModel.Name.Trim();
         }
 
-        public string Trim()
+        public async Task<string> UpperCase(bool? isChecked)
         {
-           return _fileModel.Name.Trim();
+            var fileModel = await _repository.Read();
+            return fileModel.Name = isChecked == true
+                ? fileModel.Name.Substring(0, 1).ToUpper() + fileModel.Name[1..]
+                : fileModel.Name.Substring(0, 1).ToLower() + fileModel.Name[1..];
         }
 
-        public string UpperCase(bool? isChecked)
+        public async Task<string> ReplaceSpecificString(string firststring, string secondstring)
         {
-           return _fileModel.Name = isChecked == true
-                ? _fileModel.Name.Substring(0, 1).ToUpper() + _fileModel.Name[1..]
-                : _fileModel.Name.Substring(0, 1).ToLower() + _fileModel.Name[1..];
+            var fileModel = await _repository.Read();
+            return fileModel.Name = fileModel.Name.Replace(firststring, secondstring);
         }
 
-        public string ReplaceSpecificString(string firststring, string secondstring)
+        public async Task<string> SubstringThis(string fromIndex, string toIndex)
         {
-           return _fileModel.Name = _fileModel.Name.Replace(firststring, secondstring);
-        }
-
-        public string SubstringThis(string fromIndex, string toIndex)
-        {
-            if (toIndex == "") return _fileModel.Name = _fileModel.Name.Substring(Convert.ToInt32(fromIndex));
-            else return _fileModel.Name = _fileModel.Name.Substring(Convert.ToInt32(fromIndex), Convert.ToInt32(toIndex));
+            var fileModel = await _repository.Read();
+            if (toIndex == "") return fileModel.Name = fileModel.Name.Substring(Convert.ToInt32(fromIndex));
+            else return fileModel.Name = fileModel.Name.Substring(Convert.ToInt32(fromIndex), Convert.ToInt32(toIndex));
         }
     }
 }

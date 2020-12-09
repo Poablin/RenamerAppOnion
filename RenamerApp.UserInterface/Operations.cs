@@ -57,21 +57,19 @@ namespace RenamerApp
                     var errorChecking = new ErrorChecking(fileInfo, WindowInputs, Path.GetDirectoryName(file), Logger);
                     //Under kan endres hva som skjer med navnet
                     if (WindowInputs.SpecificStringThis != "")
-                        fileInfo.ReplaceSpecificString(WindowInputs.SpecificStringThis,
-                            WindowInputs.SpecificStringWith);
+                        await fileInfo.ReplaceSpecificString(WindowInputs.SpecificStringThis, WindowInputs.SpecificStringWith);
                     if (WindowInputs.FromIndex != "")
-                        fileInfo.SubstringThis(WindowInputs.FromIndex, WindowInputs.ToIndex);
-                    if (WindowInputs.TrimCheckBox == true) fileInfo.Trim();
-                    fileInfo.UpperCase(WindowInputs.UppercaseCheckBox);
+                        await fileInfo.SubstringThis(WindowInputs.FromIndex, WindowInputs.ToIndex);
+                    if (WindowInputs.TrimCheckBox == true) await fileInfo.Trim();
+                    await fileInfo.UpperCase(WindowInputs.UppercaseCheckBox);
                     Logger.Log("Processing file");
                     //Forskjellig error checking
-                    if (errorChecking.DirectoryExistsOrNot() == false) break;
-                    if (errorChecking.FileExistsAndCopyEnabledAndDirectoryDefault() ==
-                        false) continue;
-                    if (errorChecking.FileExistsAndOverwriteNotChecked() == false) continue;
-                    errorChecking.FileExistsAndOverwriteChecked();
+                    if (await errorChecking.DirectoryExistsOrNotAsync() == false) break;
+                    if (await errorChecking.FileExistsAndCopyEnabledAndDirectoryDefaultAsync() ==false) continue;
+                    if (await errorChecking.FileExistsAndOverwriteNotCheckedAsync() == false) continue;
+                    await errorChecking.FileExistsAndOverwriteCheckedAsync();
                     //Output ting her nede
-                    await fileInfo.Start(WindowInputs.OutputDirectory, WindowInputs.CopyCheckBox, (bool)WindowInputs.OverwriteCheckBox);
+                    //await fileInfo.Start(WindowInputs.OutputDirectory, WindowInputs.CopyCheckBox, (bool)WindowInputs.OverwriteCheckBox);
                     WindowInputs.IncrementProgressBar();
                     Logger.Log("Finished processing");
                 }
