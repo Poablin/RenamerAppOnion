@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using Microsoft.Win32;
@@ -70,8 +71,7 @@ namespace RenamerApp
                     if (errorChecking.FileExistsAndOverwriteNotChecked() == false) continue;
                     errorChecking.FileExistsAndOverwriteChecked();
                     //Output ting her nede
-                    fileInfo.Start(WindowInputs.OutputDirectory, WindowInputs.CopyCheckBox,
-                        (bool) WindowInputs.OverwriteCheckBox);
+                    await fileInfo.Start(WindowInputs.OutputDirectory, WindowInputs.CopyCheckBox, (bool)WindowInputs.OverwriteCheckBox);
                     WindowInputs.IncrementProgressBar();
                     Logger.Log("Finished processing");
                 }

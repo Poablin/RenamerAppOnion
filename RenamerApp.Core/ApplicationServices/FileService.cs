@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Threading.Tasks;
 using RenamerApp.Core.DomainModel;
 
 namespace RenamerApp.Core.ApplicationServices
@@ -13,9 +14,9 @@ namespace RenamerApp.Core.ApplicationServices
 
         private FileModel _fileModel { get; }
 
-        public async void Start(string OutputDirectory, bool? copy, bool overwrite)
+        public async Task<bool> Start(string OutputDirectory, bool? copy, bool overwrite)
         {
-            await _fileModel.CopyOrMoveFilesAsync(OutputDirectory, copy, overwrite);
+           return await _fileModel.CopyOrMoveFilesAsync(OutputDirectory, copy, overwrite);
         }
 
         public bool CheckIfFileExistsInOutput(string OutputDirectory)
