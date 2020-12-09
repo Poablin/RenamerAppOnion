@@ -35,14 +35,14 @@ namespace RenamerApp.Core.ApplicationServices
             return OutputDirectory;
         }
 
-        public void Trim()
+        public string Trim()
         {
-            _fileModel.Name.Trim();
+           return _fileModel.Name.Trim();
         }
 
-        public void UpperCase(bool? isChecked)
+        public string UpperCase(bool? isChecked)
         {
-            _fileModel.Name = isChecked == true
+           return _fileModel.Name = isChecked == true
                 ? _fileModel.Name.Substring(0, 1).ToUpper() + _fileModel.Name[1..]
                 : _fileModel.Name.Substring(0, 1).ToLower() + _fileModel.Name[1..];
         }
