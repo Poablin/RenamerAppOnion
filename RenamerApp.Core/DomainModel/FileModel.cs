@@ -1,18 +1,15 @@
-﻿
-using System.Threading.Tasks;
-
-namespace RenamerApp.Core.DomainModel
+﻿namespace RenamerApp.Core.DomainModel
 {
     public class FileModel
     {
-        internal string FullFile { get; set; }
-        internal string Directory { get; set; }
-        internal string Name { get; set; }
-        internal string Extension { get; set; }
-        internal string OldName { get; set; }
-        internal bool? Copy { get; set; }
+        public string FullFile { get; set; }
+        public string Directory { get; set; }
+        public string Name { get; set; }
+        public string Extension { get; set; }
+        public string OldName { get; set; }
+        private bool? Copy { get; set; }
 
-        public string OutputDirectory { get; internal set; }
+        private string OutputDirectory { get; set; }
         public string LogStartProcessing => $"Processing: \"{OldName}{Extension}\"";
 
         public string LogFinishedProcessing

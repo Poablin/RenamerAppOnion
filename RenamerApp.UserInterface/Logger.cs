@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Windows.Controls;
+using RenamerApp.UserInterface.Interfaces;
 
-namespace RenamerApp
+namespace RenamerApp.UserInterface
 {
     internal class Logger : ILogger
     {

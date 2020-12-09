@@ -10,52 +10,54 @@ namespace RenamerApp.Core.ApplicationServices
     {
         public FileService(string file, IFileRepository repository)
         {
-            _file = file;
-            _repository = repository;
+            File = file;
+            Repository = repository;
         }
 
-        private string _file { get; }
-        private IFileRepository _repository { get; }
+        private string File { get; }
+        private IFileRepository Repository { get; }
 
-        private async Task<FileModel> StartFile()
+        public async Task<FileModel> StartFile()
         {
             var fileModel = new FileModel();
-            fileModel.FullFile = _file;
-            fileModel.Directory = Path.GetDirectoryName(_file);
-            fileModel.Name = Path.GetFileNameWithoutExtension(_file);
-            fileModel.Extension = Path.GetExtension(_file);
-            fileModel.OldName = Path.GetFileNameWithoutExtension(_file);
-            await _repository.Create(fileModel);
+            fileModel.FullFile = File;
+            fileModel.Directory = Path.GetDirectoryName(File);
+            fileModel.Name = Path.GetFileNameWithoutExtension(File);
+            fileModel.Extension = Path.GetExtension(File);
+            fileModel.OldName = Path.GetFileNameWithoutExtension(File);
+            await Repository.Create(fileModel);
             return fileModel;
         }
-        public async Task<bool> CheckIfFileExistsInOutput(string OutputDirectory)
+
+        public async Task<bool> CheckIfFileExistsInOutput(string outputDirectory)
         {
-            var fileModel = await _repository.Read();
-            return File.Exists($"{OutputDirectory}\\{fileModel.Name}{fileModel.Extension}"); ;
+            var fileModel = await Repository.Read();
+            return System.IO.File.Exists($"{outputDirectory}\\{fileModel.Name}{fileModel.Extension}");
+            ;
         }
 
-        public void CheckIfOutputDirectoryExists(string OutputDirectory)
+        public void CheckIfOutputDirectoryExists(string outputDirectory)
         {
-            Directory.Exists(OutputDirectory);
+            Directory.Exists(outputDirectory);
         }
 
-        public async Task<string> CheckIfDirectoryExistsOrSetDefault(string OutputDirectory)
+        public async Task<string> CheckIfDirectoryExistsOrSetDefault(string outputDirectory)
         {
-            var fileModel = await _repository.Read();
-            var directory = OutputDirectory == "" ? fileModel.Directory :
-                 Directory.Exists(OutputDirectory) ? OutputDirectory : "N/A";
+            var fileModel = await Repository.Read();
+            var directory = outputDirectory == "" ? fileModel.Directory :
+                Directory.Exists(outputDirectory) ? outputDirectory : "N/A";
             return directory;
         }
 
         public async Task<string> Trim()
         {
-            var fileModel = await _repository.Read();
+            var fileModel = await Repository.Read();
             return fileModel.Name.Trim();
         }
 
         public async Task<string> UpperCase(bool? isChecked)
         {
-            var fileModel = await _repository.Read();
+            var fileModel = await Repository.Read();
             return fileModel.Name = isChecked == true
                 ? fileModel.Name.Substring(0, 1).ToUpper() + fileModel.Name[1..]
                 : fileModel.Name.Substring(0, 1).ToLower() + fileModel.Name[1..];
@@ -63,15 +65,15 @@ namespace RenamerApp.Core.ApplicationServices
 
         public async Task<string> ReplaceSpecificString(string firststring, string secondstring)
         {
-            var fileModel = await _repository.Read();
+            var fileModel = await Repository.Read();
             return fileModel.Name = fileModel.Name.Replace(firststring, secondstring);
         }
 
         public async Task<string> SubstringThis(string fromIndex, string toIndex)
         {
-            var fileModel = await _repository.Read();
+            var fileModel = await Repository.Read();
             if (toIndex == "") return fileModel.Name = fileModel.Name.Substring(Convert.ToInt32(fromIndex));
-            else return fileModel.Name = fileModel.Name.Substring(Convert.ToInt32(fromIndex), Convert.ToInt32(toIndex));
+            return fileModel.Name = fileModel.Name.Substring(Convert.ToInt32(fromIndex), Convert.ToInt32(toIndex));
         }
     }
 }

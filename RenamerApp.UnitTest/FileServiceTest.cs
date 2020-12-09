@@ -1,9 +1,9 @@
-using NUnit.Framework;
-using Moq;
-using RenamerApp.Core.ApplicationServices;
-using RenamerApp.Core.DomainServices;
-using RenamerApp.Core.DomainModel;
 using System.Threading.Tasks;
+using Moq;
+using NUnit.Framework;
+using RenamerApp.Core.ApplicationServices;
+using RenamerApp.Core.DomainModel;
+using RenamerApp.Core.DomainServices;
 
 namespace RenamerApp.UnitTest
 {

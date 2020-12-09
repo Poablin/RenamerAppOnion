@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace RenamerApp
+namespace RenamerApp.UserInterface.Interfaces
 {
     internal interface ILogger
     {

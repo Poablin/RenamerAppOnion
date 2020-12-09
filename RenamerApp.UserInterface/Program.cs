@@ -1,7 +1,7 @@
 ﻿using System;
-using RenamerApp.WPFClasses;
+using RenamerApp.UserInterface.WPFClasses;
 
-namespace RenamerApp
+namespace RenamerApp.UserInterface
 {
     internal static class Program
     {

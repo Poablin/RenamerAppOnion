@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 
-namespace RenamerApp.WPFClasses
+namespace RenamerApp.UserInterface.WPFClasses
 {
     internal class EditorProgressBar : ProgressBar
     {

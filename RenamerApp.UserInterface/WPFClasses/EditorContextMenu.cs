@@ -1,6 +1,6 @@
 ﻿using System.Windows.Controls;
 
-namespace RenamerApp.WPFClasses
+namespace RenamerApp.UserInterface.WPFClasses
 {
     internal class EditorContextMenu : ContextMenu
     {

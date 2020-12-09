@@ -1,7 +1,8 @@
-﻿using RenamerApp.Core.ApplicationServices;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using RenamerApp.Core.ApplicationServices;
+using RenamerApp.UserInterface.Interfaces;
 
-namespace RenamerApp
+namespace RenamerApp.UserInterface
 {
     internal class ErrorChecking
     {

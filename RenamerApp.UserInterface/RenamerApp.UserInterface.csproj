@@ -4,7 +4,7 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>net5.0-windows</TargetFramework>
     <UseWPF>true</UseWPF>
-    <StartupObject>RenamerApp.Program</StartupObject>
+    <StartupObject>RenamerApp.UserInterface.Program</StartupObject>
   </PropertyGroup>
 
   <ItemGroup>
@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\RenamerApp.Core\RenamerApp.Core.csproj" />
+    <ProjectReference Include="..\RenamerApp.Infrastructure\RenamerApp.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

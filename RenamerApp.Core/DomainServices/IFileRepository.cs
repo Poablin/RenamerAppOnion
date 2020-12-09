@@ -1,5 +1,5 @@
-﻿using RenamerApp.Core.DomainModel;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using RenamerApp.Core.DomainModel;
 
 namespace RenamerApp.Core.DomainServices
 {

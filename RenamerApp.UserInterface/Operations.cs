@@ -7,9 +7,12 @@ using System.Windows.Controls;
 using Microsoft.Win32;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using RenamerApp.Core.ApplicationServices;
-using RenamerApp.WPFClasses;
+using RenamerApp.Core.DomainModel;
+using RenamerApp.Infrastructure;
+using RenamerApp.UserInterface.Interfaces;
+using RenamerApp.UserInterface.WPFClasses;
 
-namespace RenamerApp
+namespace RenamerApp.UserInterface
 {
     internal class Operations
     {
@@ -36,6 +39,7 @@ namespace RenamerApp
         {
             try
             {
+                var inMemoryRepository = new InMemoryRepository();
                 WindowInputs = new WindowInputs(_window);
                 WindowInputs.SetStartButtonContent("Stop !!!");
                 WindowInputs.SetProgressBarPercentage(false);
@@ -53,23 +57,28 @@ namespace RenamerApp
                 WindowInputs.SetProgressBarMaxmimum(FilePaths.Length);
                 foreach (var file in FilePaths)
                 {
-                    var fileInfo = new FileService(file);
-                    var errorChecking = new ErrorChecking(fileInfo, WindowInputs, Path.GetDirectoryName(file), Logger);
+                    var fileService = new FileService(file, inMemoryRepository);
+                    await fileService.StartFile();
+                    var errorChecking =
+                        new ErrorChecking(fileService, WindowInputs, Path.GetDirectoryName(file), Logger);
                     //Under kan endres hva som skjer med navnet
                     if (WindowInputs.SpecificStringThis != "")
-                        await fileInfo.ReplaceSpecificString(WindowInputs.SpecificStringThis, WindowInputs.SpecificStringWith);
+                        await fileService.ReplaceSpecificString(WindowInputs.SpecificStringThis,
+                            WindowInputs.SpecificStringWith);
                     if (WindowInputs.FromIndex != "")
-                        await fileInfo.SubstringThis(WindowInputs.FromIndex, WindowInputs.ToIndex);
-                    if (WindowInputs.TrimCheckBox == true) await fileInfo.Trim();
-                    await fileInfo.UpperCase(WindowInputs.UppercaseCheckBox);
+                        await fileService.SubstringThis(WindowInputs.FromIndex, WindowInputs.ToIndex);
+                    if (WindowInputs.TrimCheckBox == true) await fileService.Trim();
+                    await fileService.UpperCase(WindowInputs.UppercaseCheckBox);
                     Logger.Log("Processing file");
                     //Forskjellig error checking
                     if (await errorChecking.DirectoryExistsOrNotAsync() == false) break;
-                    if (await errorChecking.FileExistsAndCopyEnabledAndDirectoryDefaultAsync() ==false) continue;
+                    if (await errorChecking.FileExistsAndCopyEnabledAndDirectoryDefaultAsync() == false) continue;
                     if (await errorChecking.FileExistsAndOverwriteNotCheckedAsync() == false) continue;
                     await errorChecking.FileExistsAndOverwriteCheckedAsync();
                     //Output ting her nede
-                    //await fileInfo.Start(WindowInputs.OutputDirectory, WindowInputs.CopyCheckBox, (bool)WindowInputs.OverwriteCheckBox);
+                    var fileModel = await inMemoryRepository.Read();
+                    await CopyOrMoveFilesAsync(WindowInputs.OutputDirectory, WindowInputs.CopyCheckBox,
+                        (bool) WindowInputs.OverwriteCheckBox, fileModel);
                     WindowInputs.IncrementProgressBar();
                     Logger.Log("Finished processing");
                 }
@@ -90,6 +99,19 @@ namespace RenamerApp
             }
         }
 
+        private async Task<bool> CopyOrMoveFilesAsync(string outputDirectory, bool? copy, bool overwrite,
+            FileModel fileInfo)
+        {
+            if (copy == true)
+                await Task.Run(() => File.Copy($"{fileInfo.FullFile}",
+                    $"{(outputDirectory == "" ? fileInfo.Directory : outputDirectory)}\\{fileInfo.Name}{fileInfo.Extension}",
+                    overwrite));
+            else
+                await Task.Run(() => File.Move($"{fileInfo.FullFile}",
+                    $"{(outputDirectory == "" ? fileInfo.Directory : outputDirectory)}\\{fileInfo.Name}{fileInfo.Extension}",
+                    overwrite));
+            return true;
+        }
 
         private void SelectFiles(object sender, RoutedEventArgs e)
         {

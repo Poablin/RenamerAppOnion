@@ -1,4 +1,4 @@
-﻿namespace RenamerApp
+﻿namespace RenamerApp.UserInterface
 {
     internal class TextArray
     {
