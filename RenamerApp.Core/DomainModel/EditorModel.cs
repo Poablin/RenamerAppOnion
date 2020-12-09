@@ -1,10 +1,11 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 
 namespace RenamerApp
 {
-    public class FileInputs
+    public class EditorModel
     {
-        public FileInputs(string file)
+        public EditorModel(string file)
         {
             FullFile = file;
             Dire = Path.GetDirectoryName(file);
@@ -41,11 +42,39 @@ namespace RenamerApp
             return File.Exists($"{OutputDirectory}\\{Name}{Exte}");
         }
 
+        public bool CheckIfOutputDirectoryExists()
+        {
+            return Directory.Exists(OutputDirectory);
+        }
+
         public string CheckIfDirectoryExistsOrSetDefault()
         {
             OutputDirectory = OutputDirectory == "" ? Dire :
                 Directory.Exists(OutputDirectory) ? OutputDirectory : "N/A";
             return OutputDirectory;
+        }
+
+        public void Trim()
+        {
+            Name.Trim();
+        }
+
+        public void UpperCase(bool? isChecked)
+        {
+            Name = isChecked == true
+                ? Name.Substring(0, 1).ToUpper() + Name[1..]
+                : Name.Substring(0, 1).ToLower() + Name[1..];
+        }
+
+        public void ReplaceSpecificString(string firststring, string secondstring)
+        {
+            Name = Name.Replace(firststring, secondstring);
+        }
+
+        public void SubstringThis(string fromIndex, string toIndex)
+        {
+            if (toIndex == "") Name = Name.Substring(Convert.ToInt32(fromIndex));
+            else Name = Name.Substring(Convert.ToInt32(fromIndex), Convert.ToInt32(toIndex));
         }
     }
 }
