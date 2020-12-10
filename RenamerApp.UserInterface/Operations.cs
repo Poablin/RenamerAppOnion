@@ -58,7 +58,7 @@ namespace RenamerApp.UserInterface
                 {
                     var inMemoryRepository = new InMemoryRepository();
                     var fileService = new FileService(file, inMemoryRepository);
-                    await fileService.StartFile();
+                    await fileService.CreateFileRepository();
                     var fileModel = await inMemoryRepository.Read();
                     fileModel.OutputDirectory = WindowInputs.OutputDirectory;
                     var errorChecking = new ErrorChecking(fileService, WindowInputs, Path.GetDirectoryName(file), Logger);

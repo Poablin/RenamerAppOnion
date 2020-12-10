@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\RenamerApp.Core\RenamerApp.Core.csproj" />
+    <ProjectReference Include="..\RenamerApp.Infrastructure\RenamerApp.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

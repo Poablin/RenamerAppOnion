@@ -12,21 +12,22 @@ namespace RenamerApp.Core.ApplicationServices
         {
             File = file;
             Repository = repository;
+            FileModel = new FileModel();
+            FileModel.FullFile = File;
+            FileModel.Directory = Path.GetDirectoryName(File);
+            FileModel.Name = Path.GetFileNameWithoutExtension(File);
+            FileModel.Extension = Path.GetExtension(File);
+            FileModel.OldName = Path.GetFileNameWithoutExtension(File);
         }
 
         private string File { get; }
+        private FileModel FileModel { get; }
         private IFileRepository Repository { get; }
 
-        public async Task<FileModel> StartFile()
+        public async Task<FileModel> CreateFileRepository()
         {
-            var fileModel = new FileModel();
-            fileModel.FullFile = File;
-            fileModel.Directory = Path.GetDirectoryName(File);
-            fileModel.Name = Path.GetFileNameWithoutExtension(File);
-            fileModel.Extension = Path.GetExtension(File);
-            fileModel.OldName = Path.GetFileNameWithoutExtension(File);
-            await Repository.Create(fileModel);
-            return fileModel;
+            await Repository.Create(FileModel);
+            return FileModel;
         }
 
         public async Task<bool> CheckIfFileExistsInOutput(string outputDirectory)
